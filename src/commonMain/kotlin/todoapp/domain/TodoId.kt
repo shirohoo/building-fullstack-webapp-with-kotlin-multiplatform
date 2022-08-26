@@ -16,12 +16,13 @@ data class TodoId(val value: String) {
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        return when(other) {
+        return when (other) {
             is TodoId -> value == other.value
             is String -> value == other
             else -> false
         }
     }
+
     override fun hashCode() = value.hashCode()
     override fun toString() = value
 
@@ -38,14 +39,15 @@ data class TodoId(val value: String) {
     }
 }
 
-interface TodoIdGenerator {
-
-    fun generateId(): TodoId
+expect interface TodoIdGenerator {
+    open fun generateId(): TodoId
 }
 
-class RandomTodoIdGenerator: TodoIdGenerator {
+class UUIDTodoIdGenerator : TodoIdGenerator
 
-    private val CHARACTERS : List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
+class RandomTodoIdGenerator : TodoIdGenerator {
+
+    private val CHARACTERS: List<Char> = ('a'..'z') + ('A'..'Z') + ('0'..'9')
     override fun generateId() = (1..36)
         .map { CHARACTERS[kotlin.random.Random.nextInt(0, CHARACTERS.size)] }
         .joinToString("")
