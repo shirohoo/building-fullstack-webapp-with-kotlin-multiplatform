@@ -33,8 +33,10 @@ class IndexRouter : RouterFunction<ServerResponse> {
             }
             body {
                 // TODO 다음 HTML 태그를 작성하세요
-                // <div id="root"></div>
+                // <div id="root"></div>/
+                div { id = "root" }
                 // <script src="/main.js"></script>
+                script { src = "/main.js" }
             }
         }
     }
