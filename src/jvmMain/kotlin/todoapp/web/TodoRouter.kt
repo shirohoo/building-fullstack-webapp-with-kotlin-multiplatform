@@ -22,7 +22,7 @@ class TodoRouter(
     val registry: TodoRegistry,
     val modification: TodoModification,
     val cleanup: TodoCleanup
-): RouterFunction<ServerResponse> {
+) : RouterFunction<ServerResponse> {
 
     private val validator = WriteTodoCommandValidator()
 
@@ -61,6 +61,11 @@ class TodoRouter(
             // 요청 : DELETE /{id}
             // 응답 : Unit
             // 귀뜸: TodoCleanup 인터페이스가 제공하는 clear 메서드를 이용해보세요
+
+            DELETE("/{id}") { request ->
+                cleanup.clear(TodoId(request.pathVariable("id")))
+                ok().buildAndAwait()
+            }
 
             POST("/clear-completed") {
                 cleanup.clearAllCompleted()
