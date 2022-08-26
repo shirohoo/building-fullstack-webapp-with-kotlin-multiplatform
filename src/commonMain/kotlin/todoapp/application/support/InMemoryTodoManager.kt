@@ -31,7 +31,9 @@ class InMemoryTodoManager(
     override suspend fun byId(id: TodoId): Todo = loadTodoById(id)
 
     override suspend fun register(text: String): TodoId {
-        TODO("Todo registration logic is not ready")
+        val todo = Todo(id = todoIdGenerator.generateId(), text = text, createdDate = LocalDateTime.parse("2016-02-15T10:00:00"))
+        todos += todo
+        return todo.id
     }
 
     override suspend fun modify(id: TodoId, text: String, completed: Boolean) {
